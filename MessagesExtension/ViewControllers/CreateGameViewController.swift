@@ -7,15 +7,26 @@
 //
 
 import UIKit
+import Messages
+
+protocol CreateGameViewControllerDelegate: class {
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout)
+}
+
 
 class CreateGameViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate, OptionsListViewCellDelegate {
 
     static let storyboardIdentifier = "CreateGameViewController"
     static let optionSection = 2
-    
+    weak var delegate: CreateGameViewControllerDelegate?
+
+    @IBOutlet var hintText: UITextView!
+    @IBOutlet var originalText: UITextField!
     @IBOutlet var hangWordLabel: UILabel!
     
     var optionsArray = [String]()
+    var tempRandomArray = [NSInteger]()
+    
     
     // MARK: - View Life Cycle
 
@@ -33,7 +44,21 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
     
     // MARK: - Custom Action Methods
 
-    @IBAction func doneButtonPressed(_ sender: AnyObject) {
+    @IBAction func messageSendButtonPressed(_ sender: AnyObject) {
+        
+        if hintText.text.characters.count == 0 {
+            //Show alert box
+            return
+        } else if (originalText.text?.characters.count)! == 0 {
+            //Show alert box
+            return
+        }
+        
+        let messageLayout = MSMessageTemplateLayout()
+        messageLayout.caption = hangWordLabel.text
+        messageLayout.subcaption = hintText.text
+        
+        delegate?.startConversation(self, messageLayout)
     }
     
     
@@ -45,11 +70,27 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
         } else {
             optionsArray = []
         }
+        
+        tempRandomArray = []
+        let randomNumber = Int(arc4random_uniform(UInt32(optionsArray.count)))
+        tempRandomArray.append(randomNumber)
         tableView.reloadData()
-        hangWordLabel.text = string
+        finalHangWord(tempRandomArray)
 
     }
     
+    func finalHangWord(_ textArray: [NSInteger]) {
+        var hangWord = ""
+        for index in 0..<optionsArray.count {
+            if !textArray.contains(index) {
+                hangWord = hangWord.appending("\(optionsArray[index])")
+            } else {
+                hangWord = hangWord.appending(" _ ")
+            }
+        }
+        
+        hangWordLabel.text = hangWord
+    }
     
     // MARK: - Table view data source
 
@@ -69,6 +110,7 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
         if indexPath.section == CreateGameViewController.optionSection {
             let cell = tableView.dequeueReusableCell(withIdentifier: OptionsListViewCell.cellIdentifier, for: indexPath) as! OptionsListViewCell
             cell.optionsListArray = optionsArray
+            cell.optionNeglectedArray = tempRandomArray
             cell.updateOptionsView()
             cell.delegate = self
             return cell
@@ -93,16 +135,7 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
     // MARK: - OptionsList view delegate
 
     func removedWords(_ textArray: [NSInteger]) {
-        var hangWord = ""
-        for index in 0..<optionsArray.count {
-            if !textArray.contains(index) {
-                hangWord = hangWord.appending("\(optionsArray[index])")
-            } else {
-                hangWord = hangWord.appending(" _ ")
-            }
-        }
-
-        hangWordLabel.text = hangWord
+        finalHangWord(textArray)
     }
     
 }

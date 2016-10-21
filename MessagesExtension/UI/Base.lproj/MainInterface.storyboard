@@ -74,13 +74,16 @@
                                         <rect key="frame" x="0.0" y="56" width="375" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IeT-xf-Gtd" id="edZ-oj-ibm">
-                                            <frame key="frameInset" width="375" height="129"/>
+                                            <frame key="frameInset" width="375" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="One Tamil film name" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UZt-eF-sg0">
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="53l-XS-eVY" id="xP3-Bi-ncj"/>
+                                                    </connections>
                                                 </textView>
                                             </subviews>
                                             <constraints>
@@ -96,10 +99,10 @@
                             <tableViewSection headerTitle="Original value" id="GOa-AG-fVd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="60" id="Yzd-7R-GHF">
-                                        <rect key="frame" x="0.0" y="243" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="242" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yzd-7R-GHF" id="cst-yl-2mN">
-                                            <frame key="frameInset" width="375" height="59"/>
+                                            <frame key="frameInset" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Remo" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1u-OH-Gun">
@@ -124,22 +127,22 @@
                             <tableViewSection headerTitle="Options to Neglect" id="cEk-3T-HFo">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="OptionsCellIdentifier" id="hi2-nm-NI9">
-                                        <rect key="frame" x="0.0" y="360" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="358" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hi2-nm-NI9" id="OsI-JO-ihL">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Hand Word" id="jIv-iA-IXI">
+                            <tableViewSection headerTitle="Final Hang Word" id="jIv-iA-IXI">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="51" id="7rj-8o-kdm">
-                                        <rect key="frame" x="0.0" y="461" width="375" height="51"/>
+                                        <rect key="frame" x="0.0" y="458" width="375" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7rj-8o-kdm" id="nbX-jy-iWB">
-                                            <frame key="frameInset" width="375" height="50"/>
+                                            <frame key="frameInset" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0c-Id-6wm">
@@ -158,23 +161,27 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Hand Word" id="38s-Qv-0yB">
+                            <tableViewSection id="38s-Qv-0yB">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="51" id="i3k-1d-Kpd">
-                                        <rect key="frame" x="0.0" y="569" width="375" height="51"/>
+                                        <rect key="frame" x="0.0" y="545" width="375" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i3k-1d-Kpd" id="849-3p-9cP">
-                                            <frame key="frameInset" width="375" height="50"/>
+                                            <frame key="frameInset" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qk2-lV-JlS">
-                                                    <frame key="frameInset" minX="15" width="344" height="44"/>
-                                                    <state key="normal" title="Button"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qk2-lV-JlS">
+                                                    <state key="normal" title="Send"/>
+                                                    <connections>
+                                                        <action selector="messageSendButtonPressed:" destination="53l-XS-eVY" eventType="touchUpInside" id="ViW-GB-p0M"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="qk2-lV-JlS" secondAttribute="trailing" constant="15" id="UEv-Ou-MIT"/>
-                                                <constraint firstItem="qk2-lV-JlS" firstAttribute="leading" secondItem="849-3p-9cP" secondAttribute="leading" constant="15" id="kSL-NH-Wfj"/>
+                                                <constraint firstItem="qk2-lV-JlS" firstAttribute="leading" secondItem="849-3p-9cP" secondAttribute="leading" constant="15" id="9FY-9i-aHZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="qk2-lV-JlS" secondAttribute="trailing" constant="16" id="SOP-uW-sEG"/>
+                                                <constraint firstAttribute="bottom" secondItem="qk2-lV-JlS" secondAttribute="bottom" constant="3" id="aST-eS-1gL"/>
+                                                <constraint firstItem="qk2-lV-JlS" firstAttribute="top" secondItem="849-3p-9cP" secondAttribute="top" constant="4" id="eUo-mA-GQF"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -195,6 +202,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="hangWordLabel" destination="t0c-Id-6wm" id="XNr-X2-hxB"/>
+                        <outlet property="hintText" destination="UZt-eF-sg0" id="L1V-Kg-Hfh"/>
+                        <outlet property="originalText" destination="n1u-OH-Gun" id="Deh-lX-A2i"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q8l-Ve-iWd" userLabel="First Responder" sceneMemberID="firstResponder"/>

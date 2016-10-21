@@ -9,7 +9,7 @@
 import UIKit
 import Messages
 
-class MessagesViewController: MSMessagesAppViewController, StartGameViewControllerDelegate {
+class MessagesViewController: MSMessagesAppViewController, StartGameViewControllerDelegate, CreateGameViewControllerDelegate {
     
     // MARK: - View Life Cycle
 
@@ -115,7 +115,7 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     private func instantiateCreateGameView() -> UIViewController? {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: CreateGameViewController.storyboardIdentifier) as? CreateGameViewController else { fatalError("Unable to instantiate an CreateGameViewController from the storyboard") }
         
-        
+        controller.delegate = self
         return controller
 
     }
@@ -128,11 +128,34 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         
     }
     
+    private func startConversation(_ messageLayout: MSMessageTemplateLayout) {
+        guard let conversation = activeConversation else { fatalError("Expected a conversation") }
+        
+        let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
+        message.layout = messageLayout
+        
+        // Add the message to the conversation.
+        conversation.insert(message) { error in
+            if let error = error {
+                print(error)
+            }
+        }
+        
+        dismiss()
+
+    }
     
     // MARK: - StartGameViewController Delegate Methods
 
     func startGame(_ controller: StartGameViewController) {
         self.requestPresentationStyle(.expanded)
+    }
+    
+    
+    // MARK: - CreateGameViewController Delegate Methods
+    
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout) {
+        startConversation(messageLayout)
     }
     
 }

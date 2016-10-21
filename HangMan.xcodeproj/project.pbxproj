@@ -19,7 +19,6 @@
 		ECEE55FE1DAB7C440063D4AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECEE55FD1DAB7C440063D4AF /* Assets.xcassets */; };
 		ECEE56051DAB7C440063D4AF /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = ECEE56041DAB7C440063D4AF /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		ECEE560A1DAB7C440063D4AF /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECEE56091DAB7C440063D4AF /* Messages.framework */; };
-		ECEE56101DAB7C440063D4AF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECEE560E1DAB7C440063D4AF /* MainInterface.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +60,6 @@
 		ECEE55FF1DAB7C440063D4AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ECEE56041DAB7C440063D4AF /* MessagesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MessagesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECEE56091DAB7C440063D4AF /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
-		ECEE560F1DAB7C440063D4AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		ECEE56131DAB7C440063D4AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,7 +155,6 @@
 				ECD0F7F11DB9DDA400B599D7 /* Assets */,
 				ECD0F7F01DB9DD9100B599D7 /* Cell */,
 				ECD0F7EF1DB9DD8300B599D7 /* ViewControllers */,
-				ECEE560E1DAB7C440063D4AF /* MainInterface.storyboard */,
 				ECEE56131DAB7C440063D4AF /* Info.plist */,
 			);
 			path = MessagesExtension;
@@ -255,7 +252,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECEE56101DAB7C440063D4AF /* MainInterface.storyboard in Resources */,
 				ECD0F7F81DB9DDFE00B599D7 /* OptionsListViewCell.xib in Resources */,
 				ECD0F7F91DB9DDFE00B599D7 /* OptionCollectionCell.xib in Resources */,
 				ECD0F7F71DB9DDFE00B599D7 /* MainInterface.storyboard in Resources */,
@@ -293,14 +289,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				ECD0F7F41DB9DDFE00B599D7 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
-		ECEE560E1DAB7C440063D4AF /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ECEE560F1DAB7C440063D4AF /* Base */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
