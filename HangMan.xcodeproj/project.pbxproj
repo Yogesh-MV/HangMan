@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC439E4C1DBDDF03001EAE0E /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC439E4B1DBDDF03001EAE0E /* AnswerViewController.swift */; };
 		ECD0F7F71DB9DDFE00B599D7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECD0F7F31DB9DDFE00B599D7 /* MainInterface.storyboard */; };
 		ECD0F7F81DB9DDFE00B599D7 /* OptionsListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD0F7F51DB9DDFE00B599D7 /* OptionsListViewCell.xib */; };
 		ECD0F7F91DB9DDFE00B599D7 /* OptionCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD0F7F61DB9DDFE00B599D7 /* OptionCollectionCell.xib */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EC439E4B1DBDDF03001EAE0E /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
 		ECD0F7F41DB9DDFE00B599D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		ECD0F7F51DB9DDFE00B599D7 /* OptionsListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsListViewCell.xib; sourceTree = "<group>"; };
 		ECD0F7F61DB9DDFE00B599D7 /* OptionCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionCollectionCell.xib; sourceTree = "<group>"; };
@@ -75,12 +77,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC439E4D1DBDEC3F001EAE0E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		ECD0F7EF1DB9DD8300B599D7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				ECD0F8001DB9DE4900B599D7 /* StartGameViewController.swift */,
 				ECD0F8011DB9DE4900B599D7 /* CreateGameViewController.swift */,
 				ECD0F8021DB9DE4900B599D7 /* MessagesViewController.swift */,
+				EC439E4B1DBDDF03001EAE0E /* AnswerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -151,6 +161,7 @@
 		ECEE560B1DAB7C440063D4AF /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				EC439E4D1DBDEC3F001EAE0E /* Model */,
 				ECD0F7F21DB9DDAF00B599D7 /* UI */,
 				ECD0F7F11DB9DDA400B599D7 /* Assets */,
 				ECD0F7F01DB9DD9100B599D7 /* Cell */,
@@ -266,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC439E4C1DBDDF03001EAE0E /* AnswerViewController.swift in Sources */,
 				ECD0F8051DB9DE4900B599D7 /* MessagesViewController.swift in Sources */,
 				ECD0F7FF1DB9DE3F00B599D7 /* OptionCollectionCell.swift in Sources */,
 				ECD0F7FE1DB9DE3F00B599D7 /* OptionsListViewCell.swift in Sources */,

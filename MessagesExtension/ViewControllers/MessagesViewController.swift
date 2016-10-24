@@ -82,11 +82,14 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     
     private func presentView(forconversation: MSConversation, withStyle: MSMessagesAppPresentationStyle, fromStartGame: Bool) {
         // Determine the controller to present.
+        print(forconversation.selectedMessage)
         var controller: UIViewController = UIViewController()
         if forconversation.selectedMessage == nil && !fromStartGame && withStyle != .expanded {
             controller = instantiateStartGameView()!
-        } else if fromStartGame || withStyle == .expanded {
+        } else if forconversation.selectedMessage == nil && ( fromStartGame || withStyle == .expanded ){
             controller = instantiateCreateGameView()!
+        } else if forconversation.selectedMessage != nil {
+            controller = instantiateAnswerGameView()!
         }
         
         // Remove any existing child controllers.
@@ -128,7 +131,15 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         
     }
     
-    private func startConversation(_ messageLayout: MSMessageTemplateLayout) {
+    private func instantiateAnswerGameView() -> UIViewController? {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: AnswerViewController.storyboardIdentifier) as? AnswerViewController else { fatalError("Unable to instantiate an CreateGameViewController from the storyboard") }
+        
+        return controller
+        
+    }
+
+    
+    private func startConversation(_ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ removedCharacters: [String]?) {
         guard let conversation = activeConversation else { fatalError("Expected a conversation") }
         
         let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
@@ -154,8 +165,8 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     
     // MARK: - CreateGameViewController Delegate Methods
     
-    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout) {
-        startConversation(messageLayout)
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ removedCharacters: [String]?) {
+        startConversation(messageLayout, originalWord, removedCharacters)
     }
     
 }

@@ -10,7 +10,7 @@ import UIKit
 import Messages
 
 protocol CreateGameViewControllerDelegate: class {
-    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout)
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ removedCharacters: [String]?)
 }
 
 
@@ -26,7 +26,8 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
     
     var optionsArray = [String]()
     var tempRandomArray = [NSInteger]()
-    
+    var removedCharacterArray = [String]()
+
     
     // MARK: - View Life Cycle
 
@@ -58,7 +59,7 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
         messageLayout.caption = hangWordLabel.text
         messageLayout.subcaption = hintText.text
         
-        delegate?.startConversation(self, messageLayout)
+        delegate?.startConversation(self, messageLayout, originalText.text, removedCharacterArray)
     }
     
     
@@ -81,10 +82,12 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
     
     func finalHangWord(_ textArray: [NSInteger]) {
         var hangWord = ""
+        removedCharacterArray = []
         for index in 0..<optionsArray.count {
             if !textArray.contains(index) {
                 hangWord = hangWord.appending("\(optionsArray[index])")
             } else {
+                removedCharacterArray.append(optionsArray[index])
                 hangWord = hangWord.appending(" _ ")
             }
         }
