@@ -89,7 +89,24 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         } else if forconversation.selectedMessage == nil && ( fromStartGame || withStyle == .expanded ){
             controller = instantiateCreateGameView()!
         } else if forconversation.selectedMessage != nil {
-            controller = instantiateAnswerGameView()!
+            let urlComponents = NSURLComponents(url: (forconversation.selectedMessage?.url)!, resolvingAgainstBaseURL: false)
+            let queryItems = urlComponents?.queryItems
+            
+            var missedString: String = ""
+            var hangWordString: String = ""
+            var hintTextString: String = ""
+
+            for item in queryItems! {
+                let itemDetails = item as URLQueryItem
+                if itemDetails.name == "hangWord" {
+                    hangWordString = itemDetails.value!
+                } else if itemDetails.name == "hintText" {
+                    hintTextString = itemDetails.value!
+                } else if itemDetails.name != "originalWord" {
+                    missedString = missedString.appending(itemDetails.value!)
+                }
+            }
+            controller = instantiateAnswerGameView(missedString, hangWordString, hintTextString)!
         }
         
         // Remove any existing child controllers.
@@ -131,19 +148,41 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         
     }
     
-    private func instantiateAnswerGameView() -> UIViewController? {
+    private func instantiateAnswerGameView(_ missedString: String, _ hangWord: String, _ hintText: String) -> UIViewController? {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: AnswerViewController.storyboardIdentifier) as? AnswerViewController else { fatalError("Unable to instantiate an CreateGameViewController from the storyboard") }
-        
+        controller.missedString = missedString
+        controller.hangWordString = hangWord
+        controller.hintTextString = hintText
         return controller
         
     }
 
     
-    private func startConversation(_ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ removedCharacters: [String]?) {
+    private func startConversation(_ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ hangWord: String?, _ hintText: String?,  _ removedCharacters: [String]?) {
         guard let conversation = activeConversation else { fatalError("Expected a conversation") }
+        
+        let originalWordItem = URLQueryItem(name: "originalWord", value: originalWord)
+        let hangWordItem = URLQueryItem(name: "hangWord", value: hangWord)
+        let hintTextItem = URLQueryItem(name: "hintText", value: hintText)
+
+        var queryItems = [URLQueryItem]()
+        queryItems.append(originalWordItem)
+        queryItems.append(hangWordItem)
+        queryItems.append(hintTextItem)
+
+        var index = 0
+        for missedCharacter in removedCharacters! {
+            let missedItem = URLQueryItem(name: "missedItem\(index)", value: missedCharacter)
+            index += 1
+            queryItems.append(missedItem)
+        }
+        var components = URLComponents()
+        components.queryItems = queryItems
         
         let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
         message.layout = messageLayout
+        message.url = components.url!
+
         
         // Add the message to the conversation.
         conversation.insert(message) { error in
@@ -165,8 +204,9 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     
     // MARK: - CreateGameViewController Delegate Methods
     
-    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ removedCharacters: [String]?) {
-        startConversation(messageLayout, originalWord, removedCharacters)
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?) {
+        startConversation(messageLayout, originalWord, hangWord, hintText, removedCharacters)
+
     }
     
 }

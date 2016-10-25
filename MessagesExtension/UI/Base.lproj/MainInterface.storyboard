@@ -222,9 +222,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="za9-Un-zrq">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="wux-Ub-DhI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFF-6J-Y8T">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="8In-ud-4yq"/>
+                                    <constraint firstAttribute="height" constant="50" id="MQS-Mg-XN6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <nil key="textColor"/>
@@ -236,11 +244,11 @@
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OptionCollectionCellIdentifier" id="qxw-87-CqT" customClass="OptionCollectionCell" customModule="MessagesExtension" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="10" y="10" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -272,18 +280,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NFF-6J-Y8T" firstAttribute="top" secondItem="776-zA-kXx" secondAttribute="bottom" constant="33" id="7XM-ad-mGS"/>
-                            <constraint firstItem="jUi-89-TAH" firstAttribute="leading" secondItem="sUS-UX-Dnh" secondAttribute="leading" id="jgh-zF-bZd"/>
-                            <constraint firstAttribute="trailing" secondItem="NFF-6J-Y8T" secondAttribute="trailing" constant="16" id="lZ4-f5-gHh"/>
-                            <constraint firstItem="NFF-6J-Y8T" firstAttribute="leading" secondItem="sUS-UX-Dnh" secondAttribute="leading" constant="16" id="nw5-d1-RZu"/>
-                            <constraint firstAttribute="trailing" secondItem="jUi-89-TAH" secondAttribute="trailing" id="s3H-Pm-2gu"/>
-                            <constraint firstItem="jUi-89-TAH" firstAttribute="top" secondItem="NFF-6J-Y8T" secondAttribute="bottom" constant="30" id="sIs-HC-uY5"/>
-                            <constraint firstItem="oQE-lQ-sMm" firstAttribute="top" secondItem="jUi-89-TAH" secondAttribute="bottom" id="vS8-dM-dn6"/>
+                            <constraint firstItem="jUi-89-TAH" firstAttribute="leading" secondItem="sUS-UX-Dnh" secondAttribute="leading" id="172-YM-A5I"/>
+                            <constraint firstAttribute="trailing" secondItem="jUi-89-TAH" secondAttribute="trailing" id="3gP-tj-Ih0"/>
+                            <constraint firstItem="za9-Un-zrq" firstAttribute="top" secondItem="776-zA-kXx" secondAttribute="bottom" constant="10" id="4As-JE-Va1"/>
+                            <constraint firstItem="oQE-lQ-sMm" firstAttribute="top" secondItem="jUi-89-TAH" secondAttribute="bottom" id="GAC-Mo-AIc"/>
+                            <constraint firstItem="jUi-89-TAH" firstAttribute="top" secondItem="NFF-6J-Y8T" secondAttribute="bottom" constant="10" id="Nll-eX-B6d"/>
+                            <constraint firstItem="za9-Un-zrq" firstAttribute="leading" secondItem="sUS-UX-Dnh" secondAttribute="leading" constant="16" id="Pfs-s3-4Df"/>
+                            <constraint firstItem="NFF-6J-Y8T" firstAttribute="top" secondItem="za9-Un-zrq" secondAttribute="bottom" constant="10" id="X2o-f3-NMX"/>
+                            <constraint firstAttribute="trailing" secondItem="NFF-6J-Y8T" secondAttribute="trailing" constant="16" id="nrC-RQ-NyZ"/>
+                            <constraint firstItem="NFF-6J-Y8T" firstAttribute="leading" secondItem="sUS-UX-Dnh" secondAttribute="leading" constant="16" id="tWB-DR-h5c"/>
+                            <constraint firstAttribute="trailing" secondItem="za9-Un-zrq" secondAttribute="trailing" constant="16" id="yBF-Kl-wmB"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="jUi-89-TAH" id="Kjs-hf-2s3"/>
                         <outlet property="hangWordLabel" destination="NFF-6J-Y8T" id="KNg-ia-Dmo"/>
+                        <outlet property="hintLabel" destination="za9-Un-zrq" id="N56-MY-6jq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L5T-2S-rjf" userLabel="First Responder" sceneMemberID="firstResponder"/>

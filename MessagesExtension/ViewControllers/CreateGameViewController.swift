@@ -10,7 +10,7 @@ import UIKit
 import Messages
 
 protocol CreateGameViewControllerDelegate: class {
-    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ removedCharacters: [String]?)
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?)
 }
 
 
@@ -59,7 +59,7 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
         messageLayout.caption = hangWordLabel.text
         messageLayout.subcaption = hintText.text
         
-        delegate?.startConversation(self, messageLayout, originalText.text, removedCharacterArray)
+        delegate?.startConversation(self, messageLayout, originalText.text, hangWordLabel.text, hintText.text, removedCharacterArray)
     }
     
     
