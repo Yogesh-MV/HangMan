@@ -12,7 +12,8 @@ class OptionCollectionCell: UICollectionViewCell {
     static let cellIdentifier = "OptionCollectionCellIdentifier"
     
     @IBOutlet var textLabel: UILabel!
-    
+    @IBOutlet var orderLabel: UILabel!
+
     override func awakeFromNib() {
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.borderWidth = 1.0
