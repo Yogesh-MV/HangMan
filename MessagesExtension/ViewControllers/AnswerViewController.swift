@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import Messages
+
+protocol AnswerViewControllerDelegate: class {
+    func startConversation(_ controller: AnswerViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?)
+}
+
 
 class AnswerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
@@ -16,10 +22,8 @@ class AnswerViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet var hintLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
 
-    var missedString : String?
-    var hangWordString : String?
-    var hintTextString : String?
-
+    var selectedHangMessage: HangMessage?
+    
     var optionsListArray = [String]()
     var missedCharactersArray: [(missedChar: String, postition: IndexPath)] = [(String, IndexPath)]()
 
@@ -47,8 +51,8 @@ class AnswerViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     func randomString() {
         
-        hangWordLabel.text = hangWordString
-        hintLabel.text = hintTextString
+        hangWordLabel.text = selectedHangMessage?.hangWord
+        hintLabel.text = selectedHangMessage?.hintText
         
         let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         var randomArray = [String]()
@@ -59,7 +63,7 @@ class AnswerViewController: UIViewController, UICollectionViewDataSource, UIColl
             randomArray.append(NSString(characters: &nextChar, length: 1) as String)
         }
         
-        let missedLetters : NSString = NSString(format: "%@", missedString!)        
+        let missedLetters : NSString = NSString(format: "%@", (selectedHangMessage?.removedCharactersString!)!)
         for index in 0 ..< missedLetters.length {
             var nextChar = missedLetters.character(at: Int(index))
             randomArray.append(NSString(characters: &nextChar, length: 1) as String)
@@ -112,7 +116,7 @@ class AnswerViewController: UIViewController, UICollectionViewDataSource, UIColl
         if (checkExistingElemnt(element: (optionValue, indexPath)))! {
             cell.backgroundColor = UIColor.lightGray
             let index =  elementAtIndex(element: (optionValue, indexPath))
-            cell.orderLabel.text = String(format: "%d", index!)
+            cell.orderLabel.text = String(format: "%d", index! + 1)
         } else {
             cell.orderLabel.text = ""
             cell.backgroundColor = UIColor.white
@@ -126,7 +130,7 @@ class AnswerViewController: UIViewController, UICollectionViewDataSource, UIColl
         if (checkExistingElemnt(element: (optionValue, indexPath)))! {
             missedCharactersArray.remove(at: elementAtIndex(element: (optionValue, indexPath))!)
         } else {
-            if (missedString?.characters.count)! > missedCharactersArray.count {
+            if (selectedHangMessage?.removedCharactersString?.characters.count)! > missedCharactersArray.count {
                 missedCharactersArray.append((optionValue, indexPath))
             }
         }

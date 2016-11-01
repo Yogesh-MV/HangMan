@@ -89,24 +89,8 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         } else if forconversation.selectedMessage == nil && ( fromStartGame || withStyle == .expanded ){
             controller = instantiateCreateGameView()!
         } else if forconversation.selectedMessage != nil {
-            let urlComponents = NSURLComponents(url: (forconversation.selectedMessage?.url)!, resolvingAgainstBaseURL: false)
-            let queryItems = urlComponents?.queryItems
-            
-            var missedString: String = ""
-            var hangWordString: String = ""
-            var hintTextString: String = ""
-
-            for item in queryItems! {
-                let itemDetails = item as URLQueryItem
-                if itemDetails.name == "hangWord" {
-                    hangWordString = itemDetails.value!
-                } else if itemDetails.name == "hintText" {
-                    hintTextString = itemDetails.value!
-                } else if itemDetails.name != "originalWord" {
-                    missedString = missedString.appending(itemDetails.value!)
-                }
-            }
-            controller = instantiateAnswerGameView(missedString, hangWordString, hintTextString)!
+            let hangMessage = HangMessage(forconversation)
+            controller = instantiateAnswerGameView(hangMessage)!
         }
         
         // Remove any existing child controllers.
@@ -148,11 +132,9 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         
     }
     
-    private func instantiateAnswerGameView(_ missedString: String, _ hangWord: String, _ hintText: String) -> UIViewController? {
+    private func instantiateAnswerGameView(_ hangMessage: HangMessage) -> UIViewController? {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: AnswerViewController.storyboardIdentifier) as? AnswerViewController else { fatalError("Unable to instantiate an CreateGameViewController from the storyboard") }
-        controller.missedString = missedString
-        controller.hangWordString = hangWord
-        controller.hintTextString = hintText
+        controller.selectedHangMessage = hangMessage
         return controller
         
     }
@@ -161,23 +143,7 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     private func startConversation(_ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ hangWord: String?, _ hintText: String?,  _ removedCharacters: [String]?) {
         guard let conversation = activeConversation else { fatalError("Expected a conversation") }
         
-        let originalWordItem = URLQueryItem(name: "originalWord", value: originalWord)
-        let hangWordItem = URLQueryItem(name: "hangWord", value: hangWord)
-        let hintTextItem = URLQueryItem(name: "hintText", value: hintText)
-
-        var queryItems = [URLQueryItem]()
-        queryItems.append(originalWordItem)
-        queryItems.append(hangWordItem)
-        queryItems.append(hintTextItem)
-
-        var index = 0
-        for missedCharacter in removedCharacters! {
-            let missedItem = URLQueryItem(name: "missedItem\(index)", value: missedCharacter)
-            index += 1
-            queryItems.append(missedItem)
-        }
-        var components = URLComponents()
-        components.queryItems = queryItems
+        let components = HangMessage.constructComponents(originalWord, hangWord, hintText, removedCharacters)
         
         let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
         message.layout = messageLayout
