@@ -10,7 +10,7 @@ import UIKit
 import Messages
 
 protocol CreateGameViewControllerDelegate: class {
-    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?)
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?, _ optionCount: Int?)
 }
 
 
@@ -23,7 +23,9 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
     @IBOutlet var hintText: UITextView!
     @IBOutlet var originalText: UITextField!
     @IBOutlet var hangWordLabel: UILabel!
-    
+    @IBOutlet var optionStepper: UIStepper!
+    @IBOutlet var optionCountLabel: UILabel!
+
     var optionsArray = [String]()
     var tempRandomArray = [NSInteger]()
     var removedCharacterArray = [String]()
@@ -59,9 +61,13 @@ class CreateGameViewController: UITableViewController, UITextViewDelegate, UITex
         messageLayout.caption = hangWordLabel.text
         messageLayout.subcaption = hintText.text
         
-        delegate?.startConversation(self, messageLayout, originalText.text, hangWordLabel.text, hintText.text, removedCharacterArray)
+        delegate?.startConversation(self, messageLayout, originalText.text, hangWordLabel.text, hintText.text, removedCharacterArray, Int(optionCountLabel.text!))
     }
     
+    @IBAction func optionValueChanged(_ sender: UIStepper) {
+        let countValue = Int(sender.value)
+        optionCountLabel.text = "\(countValue)"
+    }
     
     // MARK: - Custom Methods
 

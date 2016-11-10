@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EC439E4C1DBDDF03001EAE0E /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC439E4B1DBDDF03001EAE0E /* AnswerViewController.swift */; };
+		EC6EA2651DD4EA7100A8179E /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EA2641DD4EA7100A8179E /* SuccessViewController.swift */; };
+		EC6EA2671DD4EA8600A8179E /* FailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EA2661DD4EA8600A8179E /* FailureViewController.swift */; };
+		EC6EA2691DD4F5A500A8179E /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EA2681DD4F5A500A8179E /* WaitingViewController.swift */; };
 		EC9B678F1DC86719004167B8 /* HangMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9B678E1DC86719004167B8 /* HangMessage.swift */; };
 		ECD0F7F71DB9DDFE00B599D7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECD0F7F31DB9DDFE00B599D7 /* MainInterface.storyboard */; };
 		ECD0F7F81DB9DDFE00B599D7 /* OptionsListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECD0F7F51DB9DDFE00B599D7 /* OptionsListViewCell.xib */; };
@@ -49,6 +52,9 @@
 
 /* Begin PBXFileReference section */
 		EC439E4B1DBDDF03001EAE0E /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		EC6EA2641DD4EA7100A8179E /* SuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
+		EC6EA2661DD4EA8600A8179E /* FailureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailureViewController.swift; sourceTree = "<group>"; };
+		EC6EA2681DD4F5A500A8179E /* WaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
 		EC9B678E1DC86719004167B8 /* HangMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangMessage.swift; sourceTree = "<group>"; };
 		ECD0F7F41DB9DDFE00B599D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		ECD0F7F51DB9DDFE00B599D7 /* OptionsListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsListViewCell.xib; sourceTree = "<group>"; };
@@ -94,6 +100,9 @@
 				ECD0F8011DB9DE4900B599D7 /* CreateGameViewController.swift */,
 				ECD0F8021DB9DE4900B599D7 /* MessagesViewController.swift */,
 				EC439E4B1DBDDF03001EAE0E /* AnswerViewController.swift */,
+				EC6EA2641DD4EA7100A8179E /* SuccessViewController.swift */,
+				EC6EA2661DD4EA8600A8179E /* FailureViewController.swift */,
+				EC6EA2681DD4F5A500A8179E /* WaitingViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -280,12 +289,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC6EA2691DD4F5A500A8179E /* WaitingViewController.swift in Sources */,
 				EC439E4C1DBDDF03001EAE0E /* AnswerViewController.swift in Sources */,
 				ECD0F8051DB9DE4900B599D7 /* MessagesViewController.swift in Sources */,
 				ECD0F7FF1DB9DE3F00B599D7 /* OptionCollectionCell.swift in Sources */,
+				EC6EA2671DD4EA8600A8179E /* FailureViewController.swift in Sources */,
 				ECD0F7FE1DB9DE3F00B599D7 /* OptionsListViewCell.swift in Sources */,
 				EC9B678F1DC86719004167B8 /* HangMessage.swift in Sources */,
 				ECD0F8041DB9DE4900B599D7 /* CreateGameViewController.swift in Sources */,
+				EC6EA2651DD4EA7100A8179E /* SuccessViewController.swift in Sources */,
 				ECD0F8031DB9DE4900B599D7 /* StartGameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

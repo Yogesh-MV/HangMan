@@ -9,7 +9,7 @@
 import UIKit
 import Messages
 
-class MessagesViewController: MSMessagesAppViewController, StartGameViewControllerDelegate, CreateGameViewControllerDelegate {
+class MessagesViewController: MSMessagesAppViewController, StartGameViewControllerDelegate, CreateGameViewControllerDelegate, AnswerViewControllerDelegate {
     
     // MARK: - View Life Cycle
 
@@ -30,6 +30,9 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
         // This will happen when the extension is about to present UI.
         
         // Use this method to configure the extension and restore previously stored state.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMessageDetails(message:)), name: NSNotification.Name(rawValue: "updateMessage"), object: nil)
+
         presentView(forconversation: conversation, withStyle: presentationStyle, fromStartGame: false)
     }
     
@@ -80,9 +83,13 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     
     // MARK: - Custom Methods
     
+    @objc private func updateMessageDetails(message: NSNotification) {
+        let details = message.object as! URLComponents
+        activeConversation?.selectedMessage?.url = details.url
+    }
+    
     private func presentView(forconversation: MSConversation, withStyle: MSMessagesAppPresentationStyle, fromStartGame: Bool) {
         // Determine the controller to present.
-        print(forconversation.selectedMessage)
         var controller: UIViewController = UIViewController()
         if forconversation.selectedMessage == nil && !fromStartGame && withStyle != .expanded {
             controller = instantiateStartGameView()!
@@ -90,7 +97,17 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
             controller = instantiateCreateGameView()!
         } else if forconversation.selectedMessage != nil {
             let hangMessage = HangMessage(forconversation)
-            controller = instantiateAnswerGameView(hangMessage)!
+            if hangMessage.isGameFinished {
+                if hangMessage.winnerUUID == forconversation.localParticipantIdentifier.uuidString {
+                    controller = instantiateSuccessView(hangMessage)!
+                } else {
+                    controller = instantiateFailureView(hangMessage)!
+                }
+            } else if hangMessage.senderUUID != forconversation.localParticipantIdentifier.uuidString {
+                controller = instantiateAnswerGameView(hangMessage)!
+            } else {
+                controller = instantiateWaitingView(hangMessage)!
+            }
         }
         
         // Remove any existing child controllers.
@@ -125,7 +142,7 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     }
     
     private func instantiateStartGameView() -> UIViewController? {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: StartGameViewController.storyboardIdentifier) as? StartGameViewController else { fatalError("Unable to instantiate an CreateGameViewController from the storyboard") }
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: StartGameViewController.storyboardIdentifier) as? StartGameViewController else { fatalError("Unable to instantiate an StartGameViewController from the storyboard") }
         
         controller.delegate = self
         return controller
@@ -133,17 +150,37 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     }
     
     private func instantiateAnswerGameView(_ hangMessage: HangMessage) -> UIViewController? {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: AnswerViewController.storyboardIdentifier) as? AnswerViewController else { fatalError("Unable to instantiate an CreateGameViewController from the storyboard") }
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: AnswerViewController.storyboardIdentifier) as? AnswerViewController else { fatalError("Unable to instantiate an AnswerViewController from the storyboard") }
+        controller.delegate = self
         controller.selectedHangMessage = hangMessage
         return controller
         
     }
+    
+    private func instantiateSuccessView(_ hangMessage: HangMessage) -> UIViewController? {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: SuccessViewController.storyboardIdentifier) as? SuccessViewController else { fatalError("Unable to instantiate an SuccessViewController from the storyboard") }
+        return controller
+        
+    }
+    
+    private func instantiateFailureView(_ hangMessage: HangMessage) -> UIViewController? {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: FailureViewController.storyboardIdentifier) as? FailureViewController else { fatalError("Unable to instantiate an FailureViewController from the storyboard") }
+        return controller
+        
+    }
+    
+    private func instantiateWaitingView(_ hangMessage: HangMessage) -> UIViewController? {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: WaitingViewController.storyboardIdentifier) as? WaitingViewController else { fatalError("Unable to instantiate an WaitingViewController from the storyboard") }
+        return controller
+        
+    }
+
 
     
-    private func startConversation(_ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ hangWord: String?, _ hintText: String?,  _ removedCharacters: [String]?) {
+    private func startConversation(_ messageLayout: MSMessageTemplateLayout, _ originalWord: String?,  _ hangWord: String?, _ hintText: String?,  _ removedCharacters: [String]?, _ optionCount: Int? ) {
         guard let conversation = activeConversation else { fatalError("Expected a conversation") }
         
-        let components = HangMessage.constructComponents(originalWord, hangWord, hintText, removedCharacters)
+        let components = HangMessage.constructComponents(originalWord, hangWord, hintText, removedCharacters, optionCount!, conversation.localParticipantIdentifier.uuidString)
         
         let message = MSMessage(session: conversation.selectedMessage?.session ?? MSSession())
         message.layout = messageLayout
@@ -170,9 +207,20 @@ class MessagesViewController: MSMessagesAppViewController, StartGameViewControll
     
     // MARK: - CreateGameViewController Delegate Methods
     
-    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?) {
-        startConversation(messageLayout, originalWord, hangWord, hintText, removedCharacters)
+    func startConversation(_ controller: CreateGameViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?, _ optionCount: Int?) {
+        startConversation(messageLayout, originalWord, hangWord, hintText, removedCharacters, optionCount)
 
     }
+    
+    // MARK: - AnswerViewControllerDelegate Delegate Methods
+
+    func showSuccessView(_ controller: AnswerViewController) {
+        presentView(forconversation: activeConversation!, withStyle: .expanded, fromStartGame: false)
+    }
+    
+    func showFailureView(_ controller: AnswerViewController) {
+        presentView(forconversation: activeConversation!, withStyle: .expanded, fromStartGame: false)
+    }
+
     
 }

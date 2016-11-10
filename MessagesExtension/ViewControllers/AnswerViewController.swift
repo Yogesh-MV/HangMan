@@ -10,13 +10,16 @@ import UIKit
 import Messages
 
 protocol AnswerViewControllerDelegate: class {
-    func startConversation(_ controller: AnswerViewController, _ messageLayout: MSMessageTemplateLayout, _ originalWord: String?, _ hangWord: String?,  _ hintText: String?, _ removedCharacters: [String]?)
+    func showSuccessView(_ controller: AnswerViewController)
+    func showFailureView(_ controller: AnswerViewController)
 }
 
 
 class AnswerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     static let storyboardIdentifier = "AnswerViewController"
+    
+    weak var delegate: AnswerViewControllerDelegate?
 
     @IBOutlet var hangWordLabel: UILabel!
     @IBOutlet var hintLabel: UILabel!
@@ -44,8 +47,21 @@ class AnswerViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - Custom Action Methods
     
     @IBAction func messageSendButtonPressed(_ sender: AnyObject) {
-        
+        if (selectedHangMessage?.checkAndUpdateOptionCount(true))! {
+            if hangWordLabel.text == selectedHangMessage?.originalWord {
+                //Show success screen and change the view
+                selectedHangMessage?.markGameAsFinished((selectedHangMessage?.currentUserUUID)!)
+                delegate?.showSuccessView(self)
+            } else {
+                //show wrong alert
+                print("show wrong alert")
+            }
+        } else {
+            //Show lose alert and change the view
+            delegate?.showFailureView(self)
+        }
     }
+    
 
     // MARK: - Custom Method
 
